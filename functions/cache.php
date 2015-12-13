@@ -86,7 +86,7 @@ class cache extends connection{
 			break;
 			case "news_general": 
 			$get_slug_from_url = new get_slug_from_url();
-			$slug = $get_slug_from_url->slug();
+			$slug = $get_slug_from_url->slug(); 
 			$sql = 'SELECT * FROM `studio404_module_item` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status ';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(

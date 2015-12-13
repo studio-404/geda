@@ -49,17 +49,9 @@ echo $title;
 <meta property="og:site_name" content="Enterprise Georgia"/>
 <meta property="og:description" content="<?=htmlentities(strip_tags($desc))?>"/>
 <link href="<?php echo TEMPLATE;?>css/bootstrap.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/bootstrap-theme.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/fonts.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/style.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/home_slide.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/jquery.bxslider.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href="<?php echo TEMPLATE;?>css/custom_res.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/> 
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,900' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" />
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" /> -->
 <script type="text/javascript" src="<?php echo TEMPLATE;?>js/compress.js?v=<?=$c['websitevertion']?>" charset="utf-8"></script>
-<script src="<?php echo PLUGINS;?>player/jwplayer.js?v=<?=$c['websitevertion']?>"></script>
-<script type="text/javascript">jwplayer.key="Jew4tEqF7WQiHaekwfYlMGfugyHPJ6jax0b3sw==";</script>
 <?php 
 if(LANG=="ge"){
 ?>
@@ -67,6 +59,31 @@ if(LANG=="ge"){
 <?php } ?>
 </head>
 <body id="menu_responsive">
+<script>
+window.$zopim||(function(d,s){var z=$zopim=function(c){
+z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+$.src='//v2.zopim.com/?3F9agsrodoXNFfwalqg40IqU1AcEccqz';z.t=+new Date;$.
+type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+$zopim(function(){
+$zopim.livechat.setOnStatus(bubble);
+function bubble(status){
+if(status=='online')
+{
+$("#chatstatus").html("Online");
+}
+else if(status=='away')
+{
+$("#chatstatus").html("Away");
+}
+else if(status=='offline')
+{
+$("#chatstatus").html("Offline");
+}
+}
+});
+</script>
 <header id="header" class="container padding_0">
 <div class="container padding_0">
 <div id="header_line">

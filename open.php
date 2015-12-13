@@ -59,8 +59,9 @@ $LANG = $obj->url("segment",1);
 $get_ip = new get_ip();
 $ip = $get_ip->ip;
 if(empty($LANG)){
-$country = new country();
-$country_detect = $country->get($ip);
+// $country = new country();
+// $country_detect = $country->get($ip);
+$country_detect = "GE";
 $welcome_class = ($country_detect=="GE") ? $c["welcome.page.slug"] : 'welcome';
 $main_language = ($country_detect=="GE") ? $c['main.language'] : 'en';
 $redirect = new redirect();

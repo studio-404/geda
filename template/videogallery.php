@@ -1,6 +1,8 @@
 <?php 
 @include("parts/header.php"); 
 ?>
+<script src="<?php echo PLUGINS;?>player/jwplayer.js?v=<?=$c['websitevertion']?>"></script>
+<script type="text/javascript">jwplayer.key="Jew4tEqF7WQiHaekwfYlMGfugyHPJ6jax0b3sw==";</script>
 <div class="container" id="container">
 <div class="col-sm-3" id="sidebar">
 <div class="breadcrumbs">

@@ -4,7 +4,7 @@
 <div class="container" id="container" style="padding-top:0; padding-bottom:0">
 <div class="row">
 <div class="col-sm-12" id="content_full" style="padding-bottom:0">
-<div class="home_slider" style="max-height:340px; overflow:hidden">
+<div class="home_slider" style="max-height:348px; overflow:hidden">
 <div id="featured" style="width:100%;">
 <div class="col-sm-8 padding_0">
 <?php
@@ -83,7 +83,7 @@ $playfile = $mystring;
 <div class="col-sm-4">
 <div class="item">
 <a class="youtube" href="<?=$mystring?>">
-<div class="image"><img src="<?=WEBSITE?>image?f=<?=WEBSITE.$val->filev?>&w=373&h=193" alt="<?=$val->title?>" class="img-responsive">
+<div class="image"><img src="<?=WEBSITE?>image?f=<?=WEBSITE.$val->filev?>&amp;w=373&amp;h=193" alt="<?=$val->title?>" class="img-responsive">
 <div class="play_icon"></div>
 </div>									
 </a>
@@ -293,11 +293,11 @@ foreach($data["components"] as $val){
 if($val->com_name != "Big homepage banner"){ continue; }
 ?>
 <div class="sme_service">
-<div class="image">
 <?php
 $homepagebunner = WEBSITE."image?f=".WEBSITE_.$val->image."&amp;w=372&amp;h=372";
 ?>
-<img src="<?php echo $homepagebunner; ?>" alt="<?=$val->title?>" class="img-responsive"/>
+<div class="image">
+<img src="<?php echo $homepagebunner; ?>" alt="<?=$val->title?>" class="img-responsive" width="100%"/>
 </div>
 <div class="title"><?=strip_tags($val->title)?></div>
 <div class="text"><?=$val->desc?></div>

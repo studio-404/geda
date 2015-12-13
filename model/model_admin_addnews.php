@@ -66,6 +66,15 @@ class model_admin_addnews extends connection{
 				// select languages
 				$model_admin_selectLanguage = new model_admin_selectLanguage();
 				$lang_query = $model_admin_selectLanguage->select_languages($c);
+
+				$chechk = 'SELECT `id` FROM `studio404_module_item` WHERE `slug`=:slug AND `status`!=1';
+				$prepchchk = $conn->prepare($chechk);
+				$prepchchk->execute(array(
+					":slug"=>$slug
+				));
+				if($prepchchk->rowCount() > 0){
+					$slug = $slug.time();
+				}
 				
 				foreach($lang_query as $lang_row){
 					$sql = 'INSERT INTO `studio404_module_item` SET 
