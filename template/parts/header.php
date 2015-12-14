@@ -50,7 +50,7 @@ echo $title;
 <meta property="og:description" content="<?=htmlentities(strip_tags($desc))?>"/>
 <link href="<?php echo TEMPLATE;?>css/bootstrap.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,900' rel='stylesheet' type='text/css'>
-<!-- <link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" /> -->
+<link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" />
 <script type="text/javascript" src="<?php echo TEMPLATE;?>js/compress.js.gz?v=<?=$c['websitevertion']?>" charset="utf-8"></script>
 <?php 
 if(LANG=="ge"){

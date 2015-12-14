@@ -52,7 +52,6 @@ $(document).ready(function(){
 	$.src='//v2.zopim.com/?3F9agsrodoXNFfwalqg40IqU1AcEccqz';z.t=+new Date;$.
 	type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 });
-
 </script>
 </body>
 </html>
