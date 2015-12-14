@@ -51,7 +51,7 @@ echo $title;
 <link href="<?php echo TEMPLATE;?>css/bootstrap.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,900' rel='stylesheet' type='text/css'>
 <!-- <link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" /> -->
-<script type="text/javascript" src="<?php echo TEMPLATE;?>js/compress.js?v=<?=$c['websitevertion']?>" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo TEMPLATE;?>js/compress.js.gz?v=<?=$c['websitevertion']?>" charset="utf-8"></script>
 <?php 
 if(LANG=="ge"){
 ?>
@@ -59,31 +59,6 @@ if(LANG=="ge"){
 <?php } ?>
 </head>
 <body id="menu_responsive">
-<script>
-window.$zopim||(function(d,s){var z=$zopim=function(c){
-z._.push(c)},$=z.s=
-d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
-$.src='//v2.zopim.com/?3F9agsrodoXNFfwalqg40IqU1AcEccqz';z.t=+new Date;$.
-type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
-$zopim(function(){
-$zopim.livechat.setOnStatus(bubble);
-function bubble(status){
-if(status=='online')
-{
-$("#chatstatus").html("Online");
-}
-else if(status=='away')
-{
-$("#chatstatus").html("Away");
-}
-else if(status=='offline')
-{
-$("#chatstatus").html("Offline");
-}
-}
-});
-</script>
 <header id="header" class="container padding_0">
 <div class="container padding_0">
 <div id="header_line">
@@ -112,7 +87,7 @@ echo '<a href="'.$replaced .'"><img src="'.WEBSITE.$val->lang_img.'" alt="" /></
 ?>
 </div>	
 <div id="live_chat_div">
-<li id="chatstatus" style="font-family:roboto">Loading status...</li>
+<li id="chatstatus" style="font-family:roboto">Zopim Chat</li>
 <li><span><a href="javascript:;" class="callZopim"><?=$data["language_data"]["livechatvalue"]?></a></span></li>
 </div>
 <div id="header_contact">

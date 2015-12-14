@@ -74,14 +74,18 @@ echo $edateY2;
 </div>
 </div>
 <div class="col-sm-4 event_line_bg whenfee_mobile">
+<?php if($first[0]->event_desc): ?>
 <div class="yellow_title"><?=$data["language_data"]["place"]?>:</div>
 <div class="text_formats_blue">
 <?=$first[0]->event_desc?>
 </div>
+<?php endif; ?>
+<?php if($first[0]->event_website): ?>
 <div class="yellow_title"><?=$data["language_data"]["website"]?>:</div>
 <div class="text_formats_blue">
 <a href="<?=$first[0]->event_website?>"><?=$first[0]->event_website?></a>
 </div>
+<?php endif; ?>
 </div>			
 </div>
 <div class="event_prog" style="margin:0">
