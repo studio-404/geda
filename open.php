@@ -51,22 +51,31 @@ $pos = strpos($actual_link, $f);
 if ($pos !== false) {
 $redirect = new redirect();
 $redirect->go(WEBSITE);
-die();
 }
 }
 $obj  = new url_controll();
 $LANG = $obj->url("segment",1);
 $get_ip = new get_ip();
 $ip = $get_ip->ip;
-if(empty($LANG)){
-// $country = new country();
-// $country_detect = $country->get($ip);
-$country_detect = "GE";
-$welcome_class = ($country_detect=="GE") ? $c["welcome.page.slug"] : 'welcome';
-$main_language = ($country_detect=="GE") ? $c['main.language'] : 'en';
-$redirect = new redirect();
-$redirect->go(WEBSITE.$main_language."/".$welcome_class);
+
+
+if(empty($LANG)){ // just domain name
+	$country_detect = "GE";
+	$welcome_class = ($country_detect=="GE") ? $c["welcome.page.slug"] : 'welcome';
+	$main_language = ($country_detect=="GE") ? $c['main.language'] : 'en';
+	$redirect = new redirect();
+	$redirect->go(WEBSITE.$main_language."/".$welcome_class);
+}else if(!in_array($LANG, $c['languages.array']) && $LANG != "image" && $LANG!=$c['admin.slug']){
+	$welcome_class = $c["welcome.page.slug"];
+	$main_language = $c['main.language'];
+	$redirect = new redirect();
+	$redirect->go(WEBSITE.$main_language."/".$welcome_class);
+}else if($LANG==$c['admin.slug']){
+	$redirect = new redirect();
+	$redirect->go(WEBSITE.$c['main.language']."/".$c['admin.slug']);
 }
+
+
 $get_lang_id = new get_lang_id();
 $lang_id = $get_lang_id->id($c,$LANG);
 define('LANG', $LANG);
