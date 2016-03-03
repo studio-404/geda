@@ -48,10 +48,7 @@ echo $title;
 <meta property="og:image" content="<?=$shareImage?>" />
 <meta property="og:site_name" content="Enterprise Georgia"/>
 <meta property="og:description" content="<?=htmlentities(strip_tags($desc))?>"/>
-<link href="<?php echo TEMPLATE;?>css/bootstrap.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,900' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="<?php echo PLUGINS;?>jquery.fancybox/source/jquery.fancybox.css?v=<?=$c['websitevertion']?>" media="screen" />
-<script type="text/javascript" src="<?php echo TEMPLATE;?>js/compress.js.gz?v=<?=$c['websitevertion']?>" charset="utf-8"></script>
+<link href="<?php echo TEMPLATE;?>css/stylesheet.css?v=<?=$c['websitevertion']?>" type="text/css" rel="stylesheet"/>
 <?php 
 if(LANG=="ge"){
 ?>
@@ -67,12 +64,10 @@ if(LANG=="ge"){
 </div>
 <div id="header_2">
 <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4 padding_0 logo_text">
-<a href="<?php echo MAIN_PAGE; ?>">
+<a href="<?php echo WEBSITE; ?>">
 <?php
 $logo = (LANG=="ge") ? 'logo2.svg' : 'logo1.svg';
-?><style>
-.st7{font-family:'bpg_caps' !important}
-</style>
+?>
 <img src="<?php echo TEMPLATE?>img/<?=$logo?>" alt="logo" /><!---->
 </a>
 </div>
@@ -80,8 +75,11 @@ $logo = (LANG=="ge") ? 'logo2.svg' : 'logo1.svg';
 <div class="language">
 <?php 
 $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$obj  = new url_controll();
+$slug = $obj->url("segment",2);
 foreach($data['languages'] as $val){ 
 $replaced = str_replace("/".LANG."/", "/".$val->langs."/", $actual_link);
+if(!$slug){ $replaced = WEBSITE.$val->langs."/home"; }
 echo '<a href="'.$replaced .'"><img src="'.WEBSITE.$val->lang_img.'" alt="" /></a>';
 }
 ?>

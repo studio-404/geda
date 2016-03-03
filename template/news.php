@@ -1,22 +1,9 @@
 <?php @include("parts/header.php"); ?>
 <div class="container" id="container">
 <div class="col-sm-3" id="sidebar">
-<div class="breadcrumbs">
-<div class="your_are_here"><?=$data["language_data"]["path"]?>: </div>
-<li><a href="<?=MAIN_PAGE?>"><?=$data["language_data"]["mainpage"]?></a><li>  >
-<?php 
-$count = count($data["breadcrups"]); 
-$x=1;
-foreach($data["breadcrups"] as $val)
-{
-if($x<$count){ $seperarator = ">"; }else{ $seperarator=""; }
-?>
-<li><a href="<?=WEBSITE.LANG."/".$val->slug?>"><?=$val->title?></a><li>  <?=$seperarator?>
 <?php
-$x++;
-}
-?>  
-</div>
+@include("parts/breadcrups.php");
+?>
 <div class="sidebar_menu">
 <ul>
 <?=$data["left_menu"]?>
@@ -75,7 +62,7 @@ $news_title_number = 65;
 }
 foreach ($newslist[0] as $val) {
 ?>
-<li style="content:''; padding:0; "><a href="<?=WEBSITE.LANG.'/'.$val->slug?>"><div class="news_date"><?=date("d",$val->date)." ".$data["language_data"][date("M",$val->date)]." ".date("Y",$val->date)?></div><?=$ctext->cut(strip_tags($val->title),$news_title_number)?></a></li>
+<li style="content:''; padding:0; "><a href="<?=WEBSITE.LANG.'/'.$val->slug?>?id=<?=$val->idx?>"><div class="news_date"><?=date("d",$val->date)." ".$data["language_data"][date("M",$val->date)]." ".date("Y",$val->date)?></div><?=$ctext->cut(strip_tags($val->title),$news_title_number)?></a></li>
 <?php
 }
 ?>

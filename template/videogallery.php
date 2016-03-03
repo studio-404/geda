@@ -1,26 +1,11 @@
 <?php 
 @include("parts/header.php"); 
 ?>
-<script src="<?php echo PLUGINS;?>player/jwplayer.js?v=<?=$c['websitevertion']?>"></script>
-<script type="text/javascript">jwplayer.key="Jew4tEqF7WQiHaekwfYlMGfugyHPJ6jax0b3sw==";</script>
 <div class="container" id="container">
 <div class="col-sm-3" id="sidebar">
-<div class="breadcrumbs">
-<div class="your_are_here"><?=$data["language_data"]["path"]?>: </div>
-<li><a href="<?=MAIN_PAGE?>"><?=$data["language_data"]["mainpage"]?></a><li>  >
-<?php 
-$count = count($data["breadcrups"]); 
-$x=1;
-foreach($data["breadcrups"] as $val)
-{
-if($x<$count){ $seperarator = ">"; }else{ $seperarator=""; }
-?>
-<li><a href="<?=WEBSITE.LANG."/".$val->slug?>"><?=$val->title?></a><li>  <?=$seperarator?>
 <?php
-$x++;
-}
-?>  
-</div>
+@include("parts/breadcrups.php");
+?>
 <div class="sidebar_menu">
 <ul>
 <?=$data["left_menu"]?>
@@ -47,36 +32,7 @@ $others = array_slice($data["videogallery_general"],1);
 <?=$first[0]->title?>
 </div>
 </div>
-<script type="text/javascript" charset="utf-8">
-<?php
-$mystring = $first[0]->file;
-$findme   = 'youtube';
-$pos = strpos($mystring, $findme);
-if($pos === false){
-$playfile = WEBSITE.$first[0]->file;
-}else{
-$playfile = $first[0]->file;
-}
-?>
-jwplayer("myElement1").setup({
-image: "<?=WEBSITE.$first[0]->filev?>", 
-file: "<?=$playfile?>",
-title: "",
-description: "2015-06-15 16:31:38.",
-primary: "html5",
-stretching:"exactfit", 
-width: "100%",
-height: "450",
-aspectratio: "3:2", 
-skin: '<?=PLUGINS?>player/skinning-sdk/five/five.xml'
-}); 
-$(document).on("click","#b_",function(e){
-$(this).hide();
-});
-jwplayer("myElement1").onPlay(function(e){ $("#b_").hide(); $("#loadergif").hide(); }); 
-jwplayer("myElement1").onPause(function(e){ $("#b_").show(); $("#loadergif").hide(); }); 
-jwplayer("myElement1").onComplete(function(e){ $("#b_").show(); $("#loadergif").hide(); }); 
-</script>
+
 <div class="other_gallery margin_top_30">
 <div class="row">
 <?php
@@ -104,17 +60,6 @@ foreach ($video_list[0] as $val) {
 $v++;
 }
 ?>
-<script type="text/javascript" charset="utf-8">
-$(document).on("click",".videofile",function(){
-var ff = $(this).data("videofile");
-var ii = $(this).data("videoimage");
-jwplayer("myElement1").load([{
-file: ff,
-image: ii
-}]);
-jwplayer("myElement1").play();
-});
-</script>
 </div>
 </div>
 <div class="text-right">		
@@ -125,3 +70,46 @@ jwplayer("myElement1").play();
 </div>
 </div>
 <?php @include("parts/footer.php"); ?>
+<script src="<?php echo PLUGINS;?>player/jwplayer.js?v=<?=$c['websitevertion']?>"></script>
+<script type="text/javascript">jwplayer.key="Jew4tEqF7WQiHaekwfYlMGfugyHPJ6jax0b3sw==";</script>
+<script type="text/javascript" charset="utf-8">
+<?php
+$mystring = $first[0]->file;
+$findme   = 'youtube';
+$pos = strpos($mystring, $findme);
+if($pos === false){
+$playfile = WEBSITE.$first[0]->file;
+}else{
+$playfile = $first[0]->file;
+}
+?>
+jwplayer("myElement1").setup({
+image: "<?=WEBSITE.$first[0]->filev?>", 
+file: "<?=$playfile?>",
+title: "",
+description: "2015-06-15 16:31:38.",
+primary: "html5",
+stretching:"exactfit", 
+width: "100%",
+height: "450",
+aspectratio: "3:2", 
+skin: '<?=PLUGINS?>player/skinning-sdk/five/five.xml'
+}); 
+jwplayer("myElement1").onPlay(function(e){ $("#b_").hide(); $("#loadergif").hide(); }); 
+jwplayer("myElement1").onPause(function(e){ $("#b_").show(); $("#loadergif").hide(); }); 
+jwplayer("myElement1").onComplete(function(e){ $("#b_").show(); $("#loadergif").hide(); }); 
+</script>
+<script type="text/javascript" charset="utf-8">
+$(document).on("click","#b_",function(e){
+	$(this).hide();
+});
+$(document).on("click",".videofile",function(){
+var ff = $(this).data("videofile");
+var ii = $(this).data("videoimage");
+jwplayer("myElement1").load([{
+file: ff,
+image: ii
+}]);
+jwplayer("myElement1").play();
+});
+</script>

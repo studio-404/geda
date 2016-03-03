@@ -1,6 +1,9 @@
 <?php if(!defined("DIR")){ exit(); }
 class news_inside extends connection{
 	function __construct($c){ 
+		if(!Input::method("GET","id") || !is_numeric(Input::method("GET","id"))){
+			redirect::url(WEBSITE);
+		}
 		$this->newsfetch($c); 
 	}
 

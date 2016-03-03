@@ -9,7 +9,7 @@ class model_admin_componentsmodele extends connection{
 		$conn = $this->conn($c);
 		$fetch = array();
 		try{
-			$sql = 'SELECT `date`, `title`, `desc`, `url`, `image` FROM `studio404_components_inside` WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:status';
+			$sql = 'SELECT `date`, `title`, `document`, `desc`, `url`, `image` FROM `studio404_components_inside` WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:status';
 			$prepare = $conn->prepare($sql);
 			$prepare->execute(array(
 				":idx"=>$_GET['id'], 
@@ -28,7 +28,7 @@ class model_admin_componentsmodele extends connection{
 			$search_in = ' AND `title` LIKE :search ';
 		}else{ $search='a'; $search_in = ' AND `id`!=:search ';  }
 
-		$sql = 'SELECT `idx`,`title`, `desc`, `url`, `position` FROM `studio404_components_inside` WHERE `cid`=:cid AND `lang`=:lang AND `status`!=:status '.$search_in.' ORDER BY `position` ASC';
+		$sql = 'SELECT `idx`,`title`, `document`, `desc`, `url`, `position` FROM `studio404_components_inside` WHERE `cid`=:cid AND `lang`=:lang AND `status`!=:status '.$search_in.' ORDER BY `position` ASC';
 		$exe_array = array(
 			":cid"=>$_GET['id'], 
 			":lang"=>LANG_ID, 
@@ -48,7 +48,7 @@ class model_admin_componentsmodele extends connection{
 		$out = '';
 		$conn = $this->conn($c);
 		$query = $conn->prepare($sql);
-		$ctext = new ctext();
+
 		try{ 
 			$query->execute($exe_array);
 			$token = md5(sha1(time()));
@@ -68,7 +68,7 @@ class model_admin_componentsmodele extends connection{
 				$out .= '</span>';
 				$out .= '<span class="cell"><a href="?action=editComponentsModule&id='.$rows['idx'].'&token='.$_SESSION['token'].'">'.$rows['title'].'</a></span>';			
 				$out .= '<span class="cell">'.$cname.'</span>';
-				$out .= '<span class="cell"><a href="'.htmlentities($rows['url']).'" target="_blank">'.htmlentities($ctext->cut($rows['url'],50)).'</a></span>';
+				$out .= '<span class="cell"><a href="'.htmlentities($rows['url']).'" target="_blank">'.htmlentities($rows['url']).'</a></span>';
 
 				$out .= '<span class="cell" style="width:120px;">
 						<a href="?action=editComponentsModule&id='.$rows['idx'].'&token='.$_SESSION['token'].'" title="Edit components"><i class="fa fa-pencil-square-o"></i></a>
@@ -116,25 +116,47 @@ class model_admin_componentsmodele extends connection{
 
 		$background = '';
 		if(isset($_POST['background'])){
-			$expl = explode("/",$_POST['background']);				
-			$from = DIR.$expl[1]."/".end($expl);
-			$To = DIR.'files/background/'.end($expl);
-			if(file_exists($from)){	
-				if(@copy($from,$To)){
-					@unlink($from);
-					$background = explode(DIR,$To);
-					$background = "/".$background[1];
+			$expl = explode("/",$_POST['background']);			
+			if(isset($expl[1])){
+				$from = DIR.$expl[1]."/".end($expl);
+				$To = DIR.'files/background/'.end($expl);
+				if(file_exists($from)){	
+					if(@copy($from,$To)){
+						@unlink($from);
+						$background = explode(DIR,$To);
+						$background = "/".$background[1];
 
+					}
 				}
-			}				
+			}
 		}
 
+		$documentsx = "";
+		if(isset($_FILES["docs"]["name"])){
+			$target_dir = "files/document/";
+			$target_ext = explode(".",$_FILES["docs"]["name"]); 
+			$target_ext = strtolower(end($target_ext));
+			$filename = md5(sha1(time())).$lang_row['id'].".".$target_ext;
+			$target_file = $target_dir . $filename;
+			$allow = array("doc","docx","xls","xlsx","pdf","zip","rar");
+			if(in_array($target_ext, $allow)){
+				if(move_uploaded_file($_FILES["docs"]["tmp_name"], $target_file)){
+					$documentsx = $target_file;
+				}
+			}
+		}
+
+		
 		// select languages
 		$model_admin_selectLanguage = new model_admin_selectLanguage();
 		$lang_query = $model_admin_selectLanguage->select_languages($c);
 		$datex = (isset($_POST['date'])) ? strtotime($_POST['date']) : time();
 		foreach($lang_query as $lang_row){
-			$sql = 'INSERT INTO `studio404_components_inside` SET `date`=:datex, `idx`=:idx, `cid`=:cid, `title`=:title, `desc`=:description, `image`=:image, `url`=:url, `insert_admin`=:insert_admin, `lang`=:lang, `position`=:position';
+			if(LANG_ID!=$lang_row['id']){
+				$background = "";
+				$documentsx = "";
+			}
+			$sql = 'INSERT INTO `studio404_components_inside` SET `date`=:datex, `document`=:document, `idx`=:idx, `cid`=:cid, `title`=:title, `desc`=:description, `image`=:image, `url`=:url, `insert_admin`=:insert_admin, `lang`=:lang, `position`=:position';
 			$prepare = $conn->prepare($sql);
 			$prepare->execute(array(
 				":datex"=>$datex, 
@@ -143,6 +165,7 @@ class model_admin_componentsmodele extends connection{
 				":title"=>$_POST['title'], 
 				":description"=>$_POST['shortdesc'], 
 				":image"=>$background, 
+				":document"=>$documentsx, 
 				":url"=>$_POST['url'], 
 				":insert_admin"=>$_SESSION["user404_id"], 
 				":lang"=>$lang_row['id'], 
@@ -165,7 +188,7 @@ class model_admin_componentsmodele extends connection{
 					$background = explode(DIR,$To);
 					$background = "/".$background[1];
 				}
-			}
+			} 
 			$sqlb = 'UPDATE `studio404_components_inside` SET `image`=:image WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:status';
 			$prepareb = $conn->prepare($sqlb);
 			$prepareb->execute(array(
@@ -174,6 +197,30 @@ class model_admin_componentsmodele extends connection{
 				":lang"=>LANG_ID, 
 				":status"=>1
 			));					
+		}
+
+		$documentsx = "";
+		if(isset($_FILES["docs"]["name"]) && !empty($_FILES["docs"]["name"])){
+			$target_dir = "files/document/";
+			$target_ext = explode(".",$_FILES["docs"]["name"]); 
+			$target_ext = strtolower(end($target_ext));
+			$filename = md5(sha1(time())).".".$target_ext;
+			$target_file = $target_dir . $filename;
+			$allow = array("doc","docx","xls","xlsx","pdf","zip","rar");
+			if(in_array($target_ext, $allow)){
+				if(move_uploaded_file($_FILES["docs"]["tmp_name"], $target_file)){
+					$documentsx = $target_file;
+
+					$sqlcomp = 'UPDATE `studio404_components_inside` SET `document`=:doc WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:status';
+					$preparecomp = $conn->prepare($sqlcomp);
+					$preparecomp->execute(array(
+						":idx"=>$_GET['id'], 
+						":doc"=>$documentsx, 
+						":lang"=>LANG_ID, 
+						":status"=>1
+					)); 
+				}
+			}
 		}
 
 		$sql = 'UPDATE `studio404_components_inside` SET `title`=:title, `desc`=:description, `url`=:url WHERE `idx`=:idx AND `lang`=:lang AND `status`!=:status';
@@ -229,6 +276,12 @@ class model_admin_componentsmodele extends connection{
 			":status"=>1, 
 			":comid"=>$componentID
 		));
+
+		$files = glob(DIR.'_cache/*'); // get all file names
+		foreach($files as $file){ // iterate files
+			if(is_file($file))
+			@unlink($file); // delete file
+		}
 
 		$this->outMessage = 1;
 	}

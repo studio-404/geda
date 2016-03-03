@@ -77,9 +77,7 @@
 	@include("view/parts/footer.php");
 	?>
 	<script type="text/javascript">
-	
-
-    $(".fancyBox").fancybox({
+	$(".fancyBox").fancybox({
 		'overlayShow'	: false,
 		'transitionIn'	: 'elastic',
 		'transitionOut'	: 'elastic'
@@ -90,7 +88,7 @@
 	    if (YtLink != null) {
 	    	var e = YtLink;
 	    	var yT_link = e;
-	    	$.post("/en/ajaxupload",{ yt_mid:'<?=(int)$_GET['midx']?>', youtubeLink: yT_link  },function(data){
+	    	$.post("/en/ajaxupload",{ yt_mid:'<?=(int)$_GET["midx"]?>', youtubeLink: yT_link  },function(data){
 	        	$(".dragElements2").append(data);
 	    	});        
 	    }
@@ -118,7 +116,8 @@
 				var idx = get_id.split("flexbox2-");
 				send_idx_array.push(idx[1]); 
 			}); 
-			$.get("/en/ajaxupload",{ idxes_photos:send_idx_array, type:'<?=$_GET['type']?>' },function(d){
+			var serialized = serialize(send_idx_array);
+			$.get("/en/ajaxupload",{ idxes_photos: serialized, type:'<?=$_GET['type']?>' },function(d){
 				console.log(d);
 			});
 		}        

@@ -2,14 +2,7 @@
 class model_template_piechartjs{
 	public function piechart($comp,$data){
 	
-		$out = '<style>';
-		if(LANG=="ge") : 
-		$out .= 'svg g text{ font-family: bpg_sans_web !important; } ';
-		endif;
-		if(LANG=="en") : 
-		$out .= 'svg g text{ font-family: roboto !important; }';
-		endif;
-		$out .= '</style>';
+		$out = '';
 		
 		$count = 0;
 		$name = array();

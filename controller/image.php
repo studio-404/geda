@@ -29,7 +29,9 @@ class image extends connection{
 			ini_set("gd.jpeg_ignore_warning", 1);
 			if (file_exists($file_path))
 			{
-			    header("location: " .WEBSITE. $file_path);
+			    // header("location: " .WEBSITE. $file_path);
+			    header('Content-type:image/png');
+				readfile(WEBSITE. $file_path);
 			}
 			else
 			{
@@ -38,7 +40,9 @@ class image extends connection{
 				@copy($without, $src);
 				$this->make_thumb($src, $w, $h, $file_path,$ext);
 				@unlink($src);
-				header("location: " .WEBSITE. $file_path);
+				// header("location: " .WEBSITE. $file_path);
+				header('Content-type:image/png');
+				readfile(WEBSITE. $file_path);
 			}
 		}catch(Exception $e){
 				die();
@@ -47,6 +51,7 @@ class image extends connection{
 
 	public function make_thumb($img_name, $new_w, $new_h, $new_name = null,$ext)
 	{
+		$ext = strtoupper($ext);
 		try
 		{
 			$bw = filter_input(INPUT_GET, "bw"); 
@@ -93,8 +98,13 @@ class image extends connection{
 		    	$this->ImageToBlackAndWhite($src_img);
 			}
 			@imagecopyresampled($dst_img, $src_img, 0, 0, $new_x, $new_y, $new_w, $new_h, $orig_w, $orig_h);
+		    if($ext=="JPG" || $ext=="JPEG")
 		    @imagejpeg($dst_img, $new_name, 95);
-
+			else if($ext=="PNG")
+			@imagepng($dst_img, $new_name, 95);
+			else if($ext=="GIF")
+			@imagegif($dst_img, $new_name, 95);
+		
 		    @imagedestroy($dst_img);
 		    @imagedestroy($src_img);
 		}catch(Exception $e){

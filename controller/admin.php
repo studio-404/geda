@@ -7,21 +7,6 @@ class admin extends connection{
 	public $data = array();
 
 	function __construct($obj,$c){
-		// $cache = new cache();
-		// $components = $cache->index($c,"components");
-		// $components_ = json_decode($components); 
-		// foreach($components_ as $val){
-		// 	if($val->com_name != "Allowed IPs"){ continue; }
-			
-		// 	if(strip_tags($val->title)==$_SERVER["REMOTE_ADDR"]){
-
-		// 		$allowIP = true;
-		// 	}
-		// }
-		// if(!$allowIP){
-		// 	echo "Sorry, Your IP( ".$_SERVER["REMOTE_ADDR"]." ) is not allowed !";
-		// 	exit();
-		// }	
 		$this->view($obj,$c);
 	}
 

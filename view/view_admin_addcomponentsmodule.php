@@ -48,7 +48,7 @@
 				}
 				?>
 
-				<form action="" method="post" class="my-form hundredPorsent" autocomplete="off">
+				<form action="" method="post" class="my-form hundredPorsent" autocomplete="off" enctype="multipart/form-data">
 					<div class="from-header" style="color:#ef4836; text-transform:uppercase">Add component module</div>
 					
 					<label for="date">Date: <font color="RED">*</font></label>
@@ -65,8 +65,14 @@
 					<!-- <input type="text" name="shortdesc" id="shortdesc" value="" autocomplete="off" /> -->
 					<textarea name="shortdesc" class="tinyMce"><?=htmlentities('')?></textarea>
 
-					<label for="url">Url: <font color="RED">*</font></label>
+					<label for="url">Url: </label>
                     <input type="text" name="url" id="url" value="" autocomplete="off" />
+
+                    <div class="attachdocument" style="position:relative">
+                    	<label for="document">Document: ( DOC, DOCX, PDF, XLS, XLSX, ZIP, RAR )</label><br />
+                    	<div class="calluploaddocument" style="width:200px; line-height:35px; background-color:#399bff; color:white; padding:0 10px; cursor:pointer; text-align:center; font-family: roboto">Choose Document</div>
+                    	<input type="file" name="docs" id="docs" value="" autocomplete="off" style="position:absolute; bottom:-20px; visibility:hidden" />
+                    </div>
 
                     <label for="backgroundImage">Image:</label><br />
 					<input type="hidden" name="background" id="background" value="" />

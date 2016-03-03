@@ -121,140 +121,160 @@ class controller
 			}
 		}else{
 
-			if($file!="admin"){// load pages
+			$get_slug_from_url = new get_slug_from_url();
+			$slug = $get_slug_from_url->slug();
+			$slug_ = str_replace(array("/","\\"), array("",""), strip_tags(urlencode($slug))); 
+			$id = (int)Input::method("GET","id");
+			$v = (int)Input::method("GET","v");
+			$pn = (int)Input::method("GET","pn");
+			$cache_file = "_cache/".$type.$slug_.$id.$v.$pn.LANG_ID.".html"; 
 
-				//select page types
-				$get_page_type = new get_page_type();
-				$page_type = $get_page_type->type_page($c);
-				
-				// text pages
-				$controller_text = "controller/text.php"; 
-				// home page
-				$controller_home = "controller/homepage.php";
-				// photo gallery page
-				$controller_photo_gallery = "controller/photogallery.php"; 
-				// video gallery page
-				$contoller_video_gallery = "controller/videogallery.php"; 
-				// catalog page
-				$controller_catalog = "controller/catalog.php";
-				// custom page
-				$cust = str_replace("-", "", $file);
-				$controller_custom = "controller/custom/".$cust.".php";
-				//event page
-				$controller_event = "controller/events.php"; 
-				//eventsinside page 
-				$controller_eventsinside = "controller/eventsinside.php"; 
-				//news page
-				$controller_news = "controller/news.php"; 
-				//news inside page
-				$controller_news_inside = "controller/news_inside.php"; 
-				// event inside page
-				$controller_events_inside = "controller/eventinside.php"; 
-				//publication page
-				$controller_publication = "controller/publication.php";
-				// team page
-				$controller_team = "controller/team.php";
-				// administrator pages
-				$controller = "controller/".$file.".php";
-				// session timeout
-				$controller_sessiontime = "controller/session_timeout.php";
-				//product page
-				$controller_product = "controller/product.php";
-				// error page 
-				$controller_errorpage = "controller/error_page.php";
-				
-				if(empty($page_type) || $page_type=="error_page"){
-					if(file_exists($controller_home)){
-						$controller = new $c["welcome.page.class"]($c); 
-					}
-				}else{ 
+			//select page types
+			$get_page_type = new get_page_type();
+			$page_type = $get_page_type->type_page($c);
 
-					//echo $page_type;
-					switch ($page_type) {
-						case 'homepage':
+			if(file_exists($cache_file) && $page_type!="eventpage"){
+				@include($cache_file); 
+			}else{
+				ob_start();
+				if($file!="admin"){// load pages
+					// text pages
+					$controller_text = "controller/text.php"; 
+					// home page
+					$controller_home = "controller/homepage.php";
+					// photo gallery page
+					$controller_photo_gallery = "controller/photogallery.php"; 
+					// video gallery page
+					$contoller_video_gallery = "controller/videogallery.php"; 
+					// catalog page
+					$controller_catalog = "controller/catalog.php";
+					// custom page
+					$cust = str_replace("-", "", $file);
+					$controller_custom = "controller/custom/".$cust.".php";
+					//event page
+					$controller_event = "controller/events.php"; 
+					//eventsinside page 
+					$controller_eventsinside = "controller/eventsinside.php"; 
+					//news page
+					$controller_news = "controller/news.php"; 
+					//news inside page
+					$controller_news_inside = "controller/news_inside.php"; 
+					// event inside page
+					$controller_events_inside = "controller/eventinside.php"; 
+					//publication page
+					$controller_publication = "controller/publication.php";
+					// team page
+					$controller_team = "controller/team.php";
+					// administrator pages
+					$controller = "controller/".$file.".php";
+					// session timeout
+					$controller_sessiontime = "controller/session_timeout.php";
+					//product page
+					$controller_product = "controller/product.php";
+					// error page 
+					$controller_errorpage = "controller/error_page.php";
+					
+					if(empty($page_type) || $page_type=="error_page"){
 						if(file_exists($controller_home)){
-							$controller = new homepage($c);
-						}	
-						break;
-						case 'session_timeout':
-						if(file_exists($controller_sessiontime)){
-							$controller = new session_timeout();
-						}	
-						break;
-						case 'textpage':
-						if(file_exists($controller_text)){
-							$controller = new text($c);
-						}	
-						break;
-						case 'photogallerypage':
-						if(file_exists($controller_photo_gallery)){
-							$controller = new photogallery($c);
-						}	
-						break;
-						case 'videogallerypage':
-						if(file_exists($contoller_video_gallery)){
-							$controller = new videogallery($c);
-						}	
-						break;
-						case 'catalogpage':
-						if(file_exists($controller_catalog)){
-							$controller = new catalog($c);
-						}	
-						break;
-						case 'custompage':
-						if(file_exists($controller_custom)){
-							$controller = new $cust($c); 
-						}	
-						break;
-						case 'eventpage':
-						if(file_exists($controller_event)){
-							$controller = new events($c);
-						}	
-						break;
-						case 'eventsinside':
-						if(file_exists($controller_eventsinside)){
-							$controller = new eventsinside($c);
-						}	
-						break;
-						case 'newspage':
-						if(file_exists($controller_news)){
-							$controller = new news($c);
-						}	
-						break;
-						case 'newsinside':  
-						if(file_exists($controller_news_inside)){ 
-							$controller = new news_inside($c);
-						}	
-						break;
-						case 'publicationpage':
-						if(file_exists($controller_publication)){
-							$controller = new publication($c);
-						}	
-						break;
-						case 'teampage':
-						if(file_exists($controller_team)){
-							$controller = new team($c);
-						}	
-						break;
-						case 'product':
-						if(file_exists($controller_product)){
-							$controller = new product($c);
-						}	
-						break;
-						case 'error_page':
-						if(file_exists($controller_errorpage)){
-							$controller = new error_page();
-						}	
-						break;
-						default: 
-						if(file_exists($controller)){
-							$controller = new $file($obj,$c); 
+							$controller = new $c["welcome.page.class"]($c); 
 						}
-						break;
+					}else{ 
+
+						//echo $page_type;
+						switch ($page_type) {
+							case 'homepage':
+							if(file_exists($controller_home)){
+								$controller = new homepage($c);
+							}	
+							break;
+							case 'session_timeout':
+							if(file_exists($controller_sessiontime)){
+								$controller = new session_timeout();
+							}	
+							break;
+							case 'textpage':
+							if(file_exists($controller_text)){
+								$controller = new text($c);
+							}	
+							break;
+							case 'photogallerypage':
+							if(file_exists($controller_photo_gallery)){
+								$controller = new photogallery($c);
+							}	
+							break;
+							case 'videogallerypage':
+							if(file_exists($contoller_video_gallery)){
+								$controller = new videogallery($c);
+							}	
+							break;
+							case 'catalogpage':
+							if(file_exists($controller_catalog)){
+								$controller = new catalog($c);
+							}	
+							break;
+							case 'custompage':
+							if(file_exists($controller_custom)){
+								$controller = new $cust($c); 
+							}	
+							break;
+							case 'eventpage':
+							if(file_exists($controller_event)){
+								$controller = new events($c);
+							}	
+							break;
+							case 'eventsinside':
+							if(file_exists($controller_eventsinside)){
+								$controller = new eventsinside($c);
+							}	
+							break;
+							case 'newspage':
+							if(file_exists($controller_news)){
+								$controller = new news($c);
+							}	
+							break;
+							case 'newsinside':  
+							if(file_exists($controller_news_inside)){ 
+								$controller = new news_inside($c);
+							}	
+							break;
+							case 'publicationpage':
+							if(file_exists($controller_publication)){
+								$controller = new publication($c);
+							}	
+							break;
+							case 'teampage':
+							if(file_exists($controller_team)){
+								$controller = new team($c);
+							}	
+							break;
+							case 'product':
+							if(file_exists($controller_product)){
+								$controller = new product($c);
+							}	
+							break;
+							case 'error_page':
+							if(file_exists($controller_errorpage)){
+								$controller = new error_page();
+							}	
+							break;
+							default: 
+							if(file_exists($controller)){
+								$controller = new $file($obj,$c); 
+							}
+							break;
+						}
 					}
-				}
+					
 			}else{
 				$controller = new error_page(); 
+			}
+
+				$content = ob_get_contents();
+				ob_clean();
+				$fh = @fopen($cache_file, 'w') or die("Error opening output file");
+				@fwrite($fh, $content);
+				@fclose($fh);
+				@include($cache_file);
 			}
 		}
 				

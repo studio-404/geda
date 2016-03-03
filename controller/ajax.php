@@ -22,6 +22,7 @@ class ajax extends connection{
 			try{
 				$sql = 'SELECT 
 				from_unixtime(`studio404_module_item`.`date`,"%d-%m-%Y") AS datex, 
+				`studio404_module_item`.`idx`, 
 				`studio404_module_item`.`slug`, 
 				`studio404_module_item`.`title`  
 				FROM 

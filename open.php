@@ -49,8 +49,7 @@ $findme   = array('\'','~','!','@','$','^','*','(',')','{','}','[',']','|',';','
 foreach ($findme as $f) {
 $pos = strpos($actual_link, $f);
 if ($pos !== false) {
-$redirect = new redirect();
-$redirect->go(WEBSITE);
+redirect::url(WEBSITE);
 }
 }
 $obj  = new url_controll();
@@ -60,11 +59,7 @@ $ip = $get_ip->ip;
 
 
 if(empty($LANG)){ // just domain name
-	$country_detect = "GE";
-	$welcome_class = ($country_detect=="GE") ? $c["welcome.page.slug"] : 'welcome';
-	$main_language = ($country_detect=="GE") ? $c['main.language'] : 'en';
-	$redirect = new redirect();
-	$redirect->go(WEBSITE.$main_language."/".$welcome_class);
+	$LANG = $c['main.language'];
 }else if(!in_array($LANG, $c['languages.array']) && $LANG != "image" && $LANG!=$c['admin.slug']){
 	$welcome_class = $c["welcome.page.slug"];
 	$main_language = $c['main.language'];
@@ -89,6 +84,8 @@ define('MAIN_PAGE', MAIN_DIR."home");
 define('ADMIN_SLUG',$c['admin.slug']);
 $controller = new controller($c);
 $controller->loadpage($obj,$c);
+$fullPath = __DIR__ . "/_cache/" ;
+array_map('unlink', glob( "$fullPath*.json"));
 }catch(Exception $e){
 echo "Critical error !";
 }

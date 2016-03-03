@@ -5,7 +5,9 @@ class cache extends connection{
 		$get_slug_from_url = new get_slug_from_url();
 		$slug = $get_slug_from_url->slug();
 		$slug_ = str_replace(array("/","\\"), array("",""), strip_tags(urlencode($slug))); 
-		$cache_file = "_cache/".$type.$slug_.LANG_ID.".json"; 
+		$id = (int)Input::method("GET","id");
+		$v = (int)Input::method("GET","v");
+		$cache_file = "_cache/".$type.$slug_.$id.$v.LANG_ID.".json"; 
 
 		if(file_exists($cache_file)){
 			$output = @file_get_contents($cache_file); 
@@ -22,9 +24,10 @@ class cache extends connection{
 			case "homepage_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_pages` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
+			$sql = 'SELECT * FROM `studio404_pages` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
@@ -35,67 +38,91 @@ class cache extends connection{
 			case "text_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_pages` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
+			$sql = 'SELECT * FROM `studio404_pages` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "team_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_pages` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
+			$sql = 'SELECT * FROM `studio404_pages` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "catalog_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_pages` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
+			$sql = 'SELECT * FROM `studio404_pages` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "publication_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_pages` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
+			$sql = 'SELECT * FROM `studio404_pages` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "news_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug(); 
-			$sql = 'SELECT * FROM `studio404_module_item` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status ';	
+			$sql = 'SELECT * FROM `studio404_module_item` WHERE `idx`=:idx AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status ';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
-				":slug"=>$slug, 
+				":idx"=>(int)Input::method("GET","id"), 
 				":lang"=>LANG_ID, 
 				":status"=>1, 
 				":visibility"=>1 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "news_list": 
 			$sql = 'SELECT 
@@ -127,7 +154,11 @@ class cache extends connection{
 				":status"=>1, 
 				":visibility"=>1, 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "team_list": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -138,6 +169,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_module_attachment`, `studio404_module`, `studio404_module_item`  
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -157,6 +189,7 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":media_type"=>'photo', 
 				":media_type_doc"=>'document', 
 				":pagetype"=>'teampage', 
@@ -165,8 +198,11 @@ class cache extends connection{
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			// $fetch = $prepare->fetchAll(PDO::FETCH_CLASS,'db_team'); 			
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "catalog_list": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -214,6 +250,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_module_attachment`, `studio404_module`, `studio404_module_item`  
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -233,6 +270,7 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":pagetype"=>'catalogpage', 
 				":media_type"=>'photo', 
 				":media_type_doc"=>'document', 
@@ -241,7 +279,11 @@ class cache extends connection{
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "catalog_info_comments_list": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -259,6 +301,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_module_attachment`, `studio404_module`, `studio404_module_item`  
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -278,6 +321,7 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":pagetype"=>'catalogpage', 
 				":media_type"=>'photo', 
 				":media_type_doc"=>'document', 
@@ -286,7 +330,12 @@ class cache extends connection{
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_CLASS,"db_catalog"); 
+			
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_CLASS,"db_catalog"); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "publication_list": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -334,6 +383,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_module_attachment`, `studio404_module`, `studio404_module_item`  
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -353,6 +403,7 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":pagetype"=>'publicationpage', 
 				":media_type"=>'photo', 
 				":media_type_doc"=>'document', 
@@ -361,7 +412,12 @@ class cache extends connection{
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "homepage_files": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -371,6 +427,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -389,13 +446,18 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":media_type"=>'photo', 
 				":slug"=>$slug, 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "text_files":
 			$get_slug_from_url = new get_slug_from_url();
@@ -406,6 +468,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -425,17 +488,22 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":media_type"=>'photo', 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "last_news_files":
 			$sql = 'SELECT 
-			`studio404_module_item`.* 
+			`studio404_module_item`.`idx`
 			FROM 
 			`studio404_pages`,`studio404_module_attachment`, `studio404_module`, `studio404_module_item` 
 			WHERE 
@@ -464,13 +532,13 @@ class cache extends connection{
 				":visibility"=>1, 
 			)); 
 			$f = $prepare->fetchAll(PDO::FETCH_ASSOC);
-			$slug = $f[0]["slug"]; 
+			$idx = $f[0]["idx"]; 
 			$sql = 'SELECT 
 			`studio404_gallery_file`.*
 			FROM 
 			`studio404_module_item`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
-			`studio404_module_item`.`slug`=:slug AND 
+			`studio404_module_item`.`idx`=:idx AND 
 			`studio404_module_item`.`lang`=:lang AND 
 			`studio404_module_item`.`visibility`!=:visibility AND 
 			`studio404_module_item`.`status`!=:status AND 
@@ -489,13 +557,17 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
-				":slug"=>$slug, 
+				":idx"=>$idx, 
 				":media_type"=>'photo', 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "news_files": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -505,7 +577,7 @@ class cache extends connection{
 			FROM 
 			`studio404_module_item`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
-			`studio404_module_item`.`slug`=:slug AND 
+			`studio404_module_item`.`idx`=:idx AND 
 			`studio404_module_item`.`lang`=:lang AND 
 			`studio404_module_item`.`visibility`!=:visibility AND 
 			`studio404_module_item`.`status`!=:status AND 
@@ -524,13 +596,17 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
-				":slug"=>$slug, 
+				":idx"=>(int)Input::method("GET","id"), 
 				":media_type"=>'photo', 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "text_documents":
 			$get_slug_from_url = new get_slug_from_url();
@@ -541,6 +617,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -560,13 +637,18 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":media_type"=>'document', 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "news_documents": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -576,7 +658,7 @@ class cache extends connection{
 			FROM 
 			`studio404_module_item`,`studio404_gallery_attachment`,`studio404_gallery`,`studio404_gallery_file` 
 			WHERE 
-			`studio404_module_item`.`slug`=:slug AND 
+			`studio404_module_item`.`idx`=:idx AND 
 			`studio404_module_item`.`lang`=:lang AND 
 			`studio404_module_item`.`visibility`!=:visibility AND 
 			`studio404_module_item`.`status`!=:status AND 
@@ -595,13 +677,17 @@ class cache extends connection{
 			';	
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
-				":slug"=>$slug, 
+				":idx"=>(int)Input::method("GET","id"), 
 				":media_type"=>'document', 
 				":status"=>1, 
 				":visibility"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 	
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "components":
 			$sql = 'SELECT 
@@ -621,7 +707,11 @@ class cache extends connection{
 				":status"=>1, 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "languages":
 			$sql = 'SELECT * FROM `studio404_language` WHERE `status`=:status AND `variable`=:false';	
@@ -630,7 +720,11 @@ class cache extends connection{
 				":status"=>1, 
 				":false"=>'false' 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "language_data":
 			$sql = 'SELECT * FROM `studio404_language` WHERE `status`!=:status AND `variable`!=:false AND `langs`=:lang';	
@@ -640,7 +734,11 @@ class cache extends connection{
 				":false"=>'false', 
 				":lang"=>LANG_ID 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "main_menu": 
 			$sql = 'SELECT * FROM `studio404_pages` WHERE `status`!=:status AND `menu_type`!=:super AND `lang`=:lang AND `visibility`!=:visibility AND `cid`=:cid ORDER BY `position` ASC';	
@@ -665,7 +763,12 @@ class cache extends connection{
 				":visibility"=>1, 
 				":cid"=>46 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_CLASS,"db_structure");
+			
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_CLASS,"db_structure");
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "left_menu": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -764,7 +867,11 @@ class cache extends connection{
 				":visibility"=>1, 
 				":status"=>1
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "news":
 			$sql = 'SELECT 
@@ -796,7 +903,11 @@ class cache extends connection{
 				":status"=>1, 
 				":visibility"=>1, 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "events":
 			$sql = 'SELECT 
@@ -829,7 +940,11 @@ class cache extends connection{
 				":status"=>1, 
 				":visibility"=>1, 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "events_general":  
 			$get_slug_from_url = new get_slug_from_url();
@@ -839,6 +954,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_module_attachment`, `studio404_module`, `studio404_module_item` 
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -857,13 +973,18 @@ class cache extends connection{
 			';
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":lang"=>LANG_ID,
 				":visibility"=>1,
 				":status"=>1,
 				":page_type"=>'eventpage'
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "event_list": 
 			$sql = 'SELECT 
@@ -912,7 +1033,11 @@ class cache extends connection{
 				":status"=>1, 
 				":visibility"=>1, 
 			)); 
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "eventsinside_general": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -936,6 +1061,7 @@ class cache extends connection{
 				ORDER BY `studio404_gallery_file`.`position` ASC LIMIT 1
 			) AS pic 
 			FROM `studio404_module_item` WHERE 
+			`studio404_module_item`.`idx`=:idx AND 
 			`studio404_module_item`.`slug`=:slug AND 
 			`studio404_module_item`.`lang`=:lang AND 
 			`studio404_module_item`.`visibility`!=:visibility AND 
@@ -944,25 +1070,35 @@ class cache extends connection{
 			$prepare->execute(array(
 				":pagetype"=>'eventpage', 
 				":media_type"=>'photo', 
+				":idx"=>(int)Input::method("GET","id"), 
 				":slug"=>$slug, 
 				":lang"=>LANG_ID, 
 				":visibility"=>1, 
 				":status"=>1
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				redirect::url(WEBSITE);
+			}
 			break;
 			case "eventsinside_general": 
 			$get_slug_from_url = new get_slug_from_url();
 			$slug = $get_slug_from_url->slug();
-			$sql = 'SELECT * FROM `studio404_module_item` WHERE `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';
+			$sql = 'SELECT * FROM `studio404_module_item` WHERE `idx`=:idx AND `slug`=:slug AND `lang`=:lang AND `visibility`!=:visibility AND `status`!=:status';
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","id"), 
 				":slug"=>$slug, 
 				":lang"=>LANG_ID, 
 				":visibility"=>1, 
 				":status"=>1
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "photo_gallery_list": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -992,6 +1128,7 @@ class cache extends connection{
 			FROM 
 			`studio404_pages`, `studio404_media_attachment`, `studio404_media`, `studio404_media_item`, `studio404_gallery_attachment`, `studio404_gallery` 
 			WHERE 
+			`studio404_pages`.`idx`=:idx AND 
 			`studio404_pages`.`slug`=:slug AND 
 			`studio404_pages`.`lang`=:lang AND 
 			`studio404_pages`.`visibility`!=:visibility AND 
@@ -1017,6 +1154,7 @@ class cache extends connection{
 			';
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
+				":idx"=>(int)Input::method("GET","v"), 
 				":slug"=>$slug, 
 				":lang"=>LANG_ID, 
 				":visibility"=>1, 
@@ -1024,7 +1162,11 @@ class cache extends connection{
 				":page_type"=>'photogallerypage', 
 				":media_type"=>'photo'
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break; 
 			case "files_":
 			$get_slug_from_url = new get_slug_from_url();
@@ -1060,7 +1202,11 @@ class cache extends connection{
 				":pagetype"=>'photogallerypage', 
 				":media_type"=>'photo' 
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "videogallery_general":
 			$get_slug_from_url = new get_slug_from_url();
@@ -1106,7 +1252,11 @@ class cache extends connection{
 				":pagetype"=>'videogallerypage', 
 				":media_type"=>'video' 
 			));
-			$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			if($prepare->rowCount() > 0){
+				$fetch = $prepare->fetchAll(PDO::FETCH_ASSOC); 
+			}else{
+				$fetch = array();
+			}
 			break;
 			case "breadcrups": 
 			$get_slug_from_url = new get_slug_from_url();
@@ -1131,7 +1281,7 @@ class cache extends connection{
 			$slice = array_slice($explode,0,($x+1));
 			$url = implode("/",$slice);
 
-			$sql = 'SELECT `title`,`slug` FROM `studio404_pages` WHERE `slug`=:slug AND `status`!=:status AND `menu_type`!=:super AND `lang`=:lang AND `visibility`!=:visibility';
+			$sql = 'SELECT `idx`,`title`,`slug` FROM `studio404_pages` WHERE `slug`=:slug AND `status`!=:status AND `menu_type`!=:super AND `lang`=:lang AND `visibility`!=:visibility';
 			$prepare = $conn->prepare($sql); 
 			$prepare->execute(array(
 				":slug"=>$url, 
@@ -1142,10 +1292,11 @@ class cache extends connection{
 			));
 			if($prepare->rowCount()){
 				$f = $prepare->fetch(PDO::FETCH_ASSOC);	
+				$out[$x]["idx"] = $f["idx"]; 
 				$out[$x]["title"] = $f["title"]; 
 				$out[$x]["slug"] = $f["slug"]; 
 			}else{
-				$sql2 = 'SELECT `title`,`slug` FROM `studio404_module_item` WHERE `slug`=:slug AND `status`!=:status AND `lang`=:lang AND `visibility`!=:visibility';
+				$sql2 = 'SELECT `idx`,`title`,`slug` FROM `studio404_module_item` WHERE `slug`=:slug AND `status`!=:status AND `lang`=:lang AND `visibility`!=:visibility';
 				$prepare2 = $conn->prepare($sql2); 
 				$prepare2->execute(array(
 					":slug"=>$url, 
@@ -1155,6 +1306,7 @@ class cache extends connection{
 				));
 				if($prepare2->rowCount()){
 					$f2 = $prepare2->fetch(PDO::FETCH_ASSOC);	
+					$out[$x]["idx"] = $f2["idx"]; 
 					$out[$x]["title"] = $f2["title"]; 
 					$out[$x]["slug"] = $f2["slug"]; 
 				}
@@ -1168,6 +1320,7 @@ class cache extends connection{
 		$conn = $this->conn($c);
 		$o = array(); 
 		foreach($fetch as $f){ 
+			$o["idx"][] = $f["idx"]; 
 			$o["date"][] = $f["date"]; 
 			$o["expiredate"][] = $f["expiredate"]; 
 			$o["title"][] = $f["title"]; 
@@ -1208,6 +1361,7 @@ class cache extends connection{
 		$fetch2 = $prepare->fetchAll(PDO::FETCH_ASSOC); 
 		if($prepare->rowCount()){
 			foreach($fetch2 as $f2){
+				$o["idx"][] = $f2["idx"]; 
 				$o["date"][] = $f2["date"]; 
 				$o["expiredate"][] = $f2["expiredate"]; 
 				$o["title"][] = $f2["title"]; 

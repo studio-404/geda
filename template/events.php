@@ -1,22 +1,9 @@
 <?php @include("parts/header.php"); ?>
 <div class="container" id="container">
 <div class="col-sm-3" id="sidebar">
-<div class="breadcrumbs">
-<div class="your_are_here"><?=$data["language_data"]["path"]?>: </div>
-<li><a href="<?=MAIN_PAGE?>"><?=$data["language_data"]["mainpage"]?></a><li>  >
-<?php 
-$count = count($data["breadcrups"]); 
-$x=1;
-foreach($data["breadcrups"] as $val)
-{
-if($x<$count){ $seperarator = ">"; }else{ $seperarator=""; }
-?>
-<li><a href="<?=WEBSITE.LANG."/".$val->slug?>"><?=$val->title?></a><li>  <?=$seperarator?>
 <?php
-$x++;
-}
-?>  
-</div>
+@include("parts/breadcrups.php");
+?>
 <div class="sidebar_menu">
 <ul>
 <?=$data["left_menu"]?>
@@ -83,7 +70,7 @@ echo $edateY2;
 <?php if($first[0]->event_website): ?>
 <div class="yellow_title"><?=$data["language_data"]["website"]?>:</div>
 <div class="text_formats_blue">
-<a href="<?=$first[0]->event_website?>"><?=$first[0]->event_website?></a>
+<a href="<?=$first[0]->event_website?>?id=<?=$first[0]->idx?>"><?=$first[0]->event_website?></a>
 </div>
 <?php endif; ?>
 </div>			
@@ -122,20 +109,25 @@ echo '</div>';
 </div>
 </div>
 </div>
+
+<?php @include("parts/footer.php"); ?>
 <script type="text/javascript" charset="utf-8">
 <?php
 $edates = '';
 $etitle = '';
 foreach($data["event_list"] as $o){
 $edates .= "'" . date("j-F-Y", $o->date) . "',";
+$eidx .=  "'".date("jFY", $o->date) ."':'".$o->idx."',"; 
 $etitle .=  "'".date("jFY", $o->date) ."':'".$o->title."',"; 
 $eslugs .= "'".date("jFY", $o->date) ."':'".$o->slug."',";
 }
 $edates = rtrim($edates, ","); 
+$eidx = rtrim($eidx, ","); 
 $etitle = rtrim($etitle, ","); 
 $eslugs = rtrim($eslugs, ","); 
 ?>
 var event_array = [<?=$edates?>];
+var event_idxes = [{<?=$eidx?>}];
 var event_titles = [{<?=$etitle?>}];
 var event_slugs = [{<?=$eslugs?>}]; 
 function include(arr,obj) {
@@ -183,7 +175,7 @@ for(var  i = 0; i < 6; i++) calendar += '<td class="not_date">';
 for(var  i = 1; i <= Dlast; i++) {
 var c_date = i+"-"+month_english[D.getMonth()]+"-"+D.getFullYear();
 var c_date2 = i+month_english[D.getMonth()]+D.getFullYear();
-var c_date3 = '<?php echo WEBSITE.LANG."/"; ?>'+event_slugs[0][c_date2];
+var c_date3 = '<?php echo WEBSITE.LANG."/"; ?>'+event_slugs[0][c_date2]+"?id="+event_idxes[0][c_date2];
 if(include(event_array,c_date)){ var event_exists = ' events_true';  }
 else{ var event_exists = ''; }
 if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
@@ -223,4 +215,3 @@ document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(3)').oncli
 Calendar2(event_array,"calendar2", document.querySelector('#calendar2 thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar2 thead td:nth-child(2)').dataset.month)+1);
 }
 </script>
-<?php @include("parts/footer.php"); ?>

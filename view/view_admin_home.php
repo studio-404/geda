@@ -143,14 +143,14 @@
 						<div class="row">
 							<span class="cell primary" data-label="Vehicle">Video Gallery</span>
 							<span class="cell" data-label="Action">
-								<a href="<?=WEBSITE.LANG?>/eadmin?action=gallery&amp;type=videogallerypage&amp;id=34&amp;super=2&amp;token=<?=$_GET['token']?>"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?=WEBSITE.LANG?>/eadmin?action=editMediaItem&amp;id=34&amp;midx=1&amp;super=2&amp;type=videogallerypage&amp;token=<?=$_GET['token']?>"><i class="fa fa-pencil-square-o"></i></a>
 							</span>
 						</div>
 
 						<div class="row">
 							<span class="cell primary" data-label="Vehicle">Publications</span>
 							<span class="cell" data-label="Action">
-								<a href="<?=WEBSITE.LANG?>/eadmin?action=catalogModule&amp;type=publicationpage&amp;id=35&amp;super=2&amp;token=<?=$_GET['token']?>"><i class="fa fa-pencil-square-o"></i></a>
+								<a href="<?=WEBSITE.LANG?>/eadmin?action=componentModule&amp;id=15&amp;token=<?=$_GET['token']?>"><i class="fa fa-pencil-square-o"></i></a>
 							</span>
 						</div>
 

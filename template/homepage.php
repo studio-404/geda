@@ -13,13 +13,13 @@ $ctext = new ctext();
 if(LANG=="ge"){
 $slider_title_number = 30;
 $slider_title_number2 = 30;
-$slider_desc_number = 75;
-$slider_desc_number2 = 85;
+$slider_desc_number = 35;
+$slider_desc_number2 = 90;
 }else{
 $slider_title_number = 30;
 $slider_title_number2 = 30;
-$slider_desc_number = 45;
-$slider_desc_number2 = 100;
+$slider_desc_number = 35;
+$slider_desc_number2 = 90;
 }
 foreach($data["components"] as $val){
 if($x >=5){ break; }
@@ -47,7 +47,7 @@ foreach($data["components"] as $val){
 if($x >=5){ break; }
 if($val->com_name != "Slider"){ continue; }
 ?>
-<li class="ui-tabs-nav-item" id="nav-fragment-<?=$x?>">
+<li class="ui-tabs-nav-item" id="nav-fragment-<?=$x?>" title="<?=htmlentities(strip_tags($val->title))?>">
 <a href="#fragment-<?=$x?>" data-gotourl="<?=$val->url?>">
 <div>
 <span><?=$ctext->cut(strip_tags($val->title),$slider_desc_number)?></span><br/>
@@ -87,8 +87,8 @@ $playfile = $mystring;
 <div class="play_icon"></div>
 </div>									
 </a>
-<div class="text_formats">
-<?=$val->title?>
+<div class="text_formats" title="<?=htmlentities(strip_tags($val->title))?>" style="line-height:39px; cursor:pointer">
+<?=$ctext->cut($val->title,35)?>
 </div>
 </div>
 </div>
@@ -99,12 +99,17 @@ $playfile = $mystring;
 <?php
 foreach($data["components"] as $val){
 if($val->com_name != "Banners"){ continue; }
+if(LANG=="ge"){
+	$style = " style='margin: 0; padding: 0; width: 100%; font-size: 20px; color: white !important; margin-bottom: 10px; font-family:bpg_caps '";
+}else{
+	$style = "";
+}
 ?>
 <div class="col-sm-12">
 <a href="<?php echo $val->url; ?>" target="_blank">
 <div class="item" style="position:relative">	
 <div class="bunnerText">
-<h4><?php echo strip_tags($val->title); ?></h4>
+<h4<?=$style?>><?php echo strip_tags($val->title);?></h4>
 <p><?php echo strip_tags($val->desc); ?></p>
 <span><?php echo strip_tags(str_replace( array("http://","http://www."), array("www.","www."), $val->url)); ?></span>
 </div>				
@@ -127,7 +132,7 @@ if($val->com_name != "Banners"){ continue; }
 <div class="home_news_events" role="tabpanel">			
 <ul class="tablist_div" role="tablist">
 <li class="active home_news_event_tab">
-<a href="#home_news" role="tab" data-toggle="tab" title="Under Construction">
+<a href="<?=WEBSITE.LANG?>/media-center/news">
 <img src="<?php echo TEMPLATE?>img/home_news_tab.png" alt="" />
 <div><?=$data["language_data"]["newsheader"]?></div>
 </a>
@@ -141,9 +146,9 @@ if($val->com_name != "Banners"){ continue; }
 </ul>
 <?php
 if(LANG=="ge"){
-$news_title_number = 50;
+$news_title_number = 65;
 }else{
-$news_title_number = 50;
+$news_title_number = 65;
 }
 ?>
 <div class="tab-content">
@@ -159,8 +164,8 @@ if(is_array($newArray1) && count($newArray1)>0){
 <?php 
 foreach($newArray1 as $val){
 ?>
-<div class="col-sm-12 news_item">
-<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>">
+<div class="col-sm-12 news_item" title="<?=htmlentities(strip_tags($val->title))?>">
+<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>?id=<?=$val->idx?>">
 <div class="date"><span><?=date("d",$val->date)?></span> <?=date("M",$val->date)?></div>
 <div class="text"><?=$ctext->cut($val->title,$news_title_number)?></div>
 </a>	
@@ -180,8 +185,8 @@ if(is_array($newArray2) && count($newArray2)>0){
 <?php 
 foreach($newArray2 as $val){
 ?>
-<div class="col-sm-12 news_item">
-<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>">
+<div class="col-sm-12 news_item" title="<?=htmlentities(strip_tags($val->title))?>">
+<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>?id=<?=$val->idx?>">
 <div class="date"><span><?=date("d",$val->date)?></span> <?=date("M",$val->date)?></div>
 <div class="text"><?=$ctext->cut($val->title,$news_title_number)?></div>
 </a>	
@@ -201,8 +206,8 @@ if(is_array($newArray3) && count($newArray3)>0){
 <?php 
 foreach($newArray3 as $val){
 ?>
-<div class="col-sm-12 news_item">
-<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>">
+<div class="col-sm-12 news_item" title="<?=htmlentities(strip_tags($val->title))?>">
+<a href="<?=WEBSITE.LANG."/".htmlentities($val->slug)?>?id=<?=$val->idx?>">
 <div class="date"><span><?=date("d",$val->date)?></span> <?=date("M",$val->date)?></div>
 <div class="text"><?=$ctext->cut($val->title,$news_title_number)?></div>
 </a>	
@@ -333,7 +338,14 @@ if(!empty($expl[1])){ $target = 'target="_self"'; }else{ $target = 'target="_bla
 <a href="<?=$expl[0]?>" <?=$target?> style="display:block">
 <div style="background-image:url('<?=WEBSITE?>image?f=<?=WEBSITE_.$val->image?>&amp;w=366&amp;h=132'); margin:0; padding:35px 30px; max-height:132px; min-height:132px;">
 <div style="width:auto;">
-<h4 style="margin: 0; padding: 0; width: 100%; font-size: 25px; color: white !important; margin-bottom: 10px;"><?=$ctext->cut(strip_tags($val->title),55)?></h4>
+	<?php
+	if(LANG=="ge"){
+		$style = ' style="margin: 0; padding: 0; width: 100%; font-size: 20px; color: white !important; margin-bottom: 10px; font-family: bpg_caps"';
+	}else{
+		$style = ' style="margin: 0; padding: 0; width: 100%; font-size: 25px; color: white !important; margin-bottom: 10px; font-family: roboto"';
+	}
+	?>
+<h4<?=$style?>><?=$ctext->cut(strip_tags($val->title),55)?></h4>
 <p style="color:white; width:auto;"><?=$ctext->cut(strip_tags($val->desc),120)?></p>
 </div>
 </div>
@@ -351,8 +363,14 @@ $x++;
 </div>
 </div>
 </div>
+<style type="text/css">
 <?php 
+if(LANG=="ge") : echo 'svg g text{ font-family: bpg_sans_web !important; } '; endif;
+if(LANG=="en") : echo 'svg g text{ font-family: roboto !important; }'; endif;
+?>
+</style>
+<?php
+@include("parts/footer.php"); 
 $model_template_piechartjs = new model_template_piechartjs(); 
 echo $model_template_piechartjs->piechart($data["components"],$data);
-@include("parts/footer.php"); 
 ?>

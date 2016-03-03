@@ -1,0 +1,55 @@
+[09-Sep-2015 00:28:57 Asia/Tbilisi] PHP Fatal error:  Call to undefined method PDOStatement::rowCout() in /home/geoweb/enterprise.404.ge/model/model_admin_editcatalogsitem.php on line 109
+[09-Sep-2015 00:29:22 Asia/Tbilisi] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens' in /home/geoweb/enterprise.404.ge/model/model_admin_editcatalogsitem.php:127
+Stack trace:
+#0 /home/geoweb/enterprise.404.ge/model/model_admin_editcatalogsitem.php(127): PDOStatement->execute(Array)
+#1 /home/geoweb/enterprise.404.ge/model/model_admin_requests.php(128): model_admin_editcatalogsitem->removeMe(Array)
+#2 /home/geoweb/enterprise.404.ge/controller/admin.php(16): model_admin_requests->requestx(Array)
+#3 /home/geoweb/enterprise.404.ge/controller/admin.php(10): admin->view(Object(url_controll), Array)
+#4 /home/geoweb/enterprise.404.ge/functions/controller.php(76): admin->__construct(Object(url_controll), Array)
+#5 /home/geoweb/enterprise.404.ge/open.php(130): controller->loadpage(Object(url_controll), Array)
+#6 {main}
+  thrown in /home/geoweb/enterprise.404.ge/model/model_admin_editcatalogsitem.php on line 127
+[09-Sep-2015 01:56:05 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:22:37 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:23:43 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:25:49 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:27:06 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:29:27 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:30:50 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:31:56 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:34:28 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:36:28 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:37:24 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:38:17 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:39:15 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:40:08 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:41:08 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:42:06 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:43:15 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:44:28 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:46:31 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:47:29 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:48:24 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:50:40 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 02:51:28 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 13:02:29 Asia/Tbilisi] PHP Warning:  Invalid argument supplied for foreach() in /home/geoweb/enterprise.404.ge/controller/ajaxupload.php on line 169
+[09-Sep-2015 04:06:14 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:06:47 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:14:32 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:14:47 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:22:55 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:24:33 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:31:53 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:32:12 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 04:36:27 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 14:21:14 Asia/Tbilisi] PHP Warning:  Invalid argument supplied for foreach() in /home/geoweb/enterprise.404.ge/controller/ajaxupload.php on line 169
+[09-Sep-2015 05:21:40 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 14:22:00 Asia/Tbilisi] PHP Warning:  Invalid argument supplied for foreach() in /home/geoweb/enterprise.404.ge/controller/ajaxupload.php on line 169
+[09-Sep-2015 05:22:17 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:22:46 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:23:12 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:26:50 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:31:32 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:31:56 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:32:16 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
+[09-Sep-2015 05:32:51 America/Chicago] PHP Warning:  Missing boundary in multipart/form-data POST data in Unknown on line 0
